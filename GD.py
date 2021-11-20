@@ -1,6 +1,8 @@
+import time
+
 import numpy as np
 
-n = 100
+n = pow(10, 6)
 m = 100
 
 
@@ -19,16 +21,16 @@ def is_zero_def(x):
     return x == 0
 
 
-def bi_section(X: np.array, y: np.array, beta: np.array, decent: np.array, upper=0.0001, tolerance=0.000000001) -> float:
+def bi_section(X: np.array, y: np.array, beta: np.array, decent: np.array, upper=0.000001, tolerance=0.000000001) -> float:
     curr_lower = 0.0
     curr_upper = upper
     alpha_curr = 0.0
     while (curr_upper - curr_lower) > tolerance:
         alpha_curr = (curr_upper + curr_lower) / 2
-        # print("upper ", curr_upper)
-        # print("lower ", curr_lower)
-        # print("alpha ", alpha_curr)
-        # print("\n")
+        print("upper ", curr_upper)
+        print("lower ", curr_lower)
+        print("alpha ", alpha_curr)
+        print("\n")
         # alpha_hessian = (X.T.dot(X).dot(beta + alpha_curr * decent) - 2 * X.T.dot(y)).dot(decent.T)
         # alpha_hessian = decent.dot((X.T.dot(X).dot(beta + alpha_curr * decent) - 2 * X.T.dot(y)))
         l2_sum = 0
@@ -52,7 +54,7 @@ def bi_section(X: np.array, y: np.array, beta: np.array, decent: np.array, upper
 
 
 # (exact line search)
-def gradient_descent(X: np.array, y: np.array, iterations=100, alpha_upper=0.1, stop_condition=0.001):
+def gradient_descent(X: np.array, y: np.array, iterations=100, stop_condition=0.001):
     total_n = X.shape[1]
     beta_curr = np.zeros((total_n, 1))
 
@@ -75,9 +77,12 @@ def gradient_descent(X: np.array, y: np.array, iterations=100, alpha_upper=0.1, 
 # end def
 
 
-the_x = np.random.rand(n, m)
+the_x = np.random.rand(m, n)
 the_y = np.random.rand(m, 1)
 
 if __name__ == '__main__':
     print("hello")
+    time_start = time.time()
     gradient_descent(the_x, the_y, iterations=10000)
+    time_end = time.time()
+    print("total time = ", time_end-time_start)
